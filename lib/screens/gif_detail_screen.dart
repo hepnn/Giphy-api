@@ -10,7 +10,7 @@ class GiphyPageDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text('Gif Details', style: TextStyle(color: Colors.black)),
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -28,8 +28,8 @@ class GiphyPageDetail extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(_gifData!["title"]),
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
+            const Padding(
+              padding: EdgeInsets.only(top: 30.0),
             ),
             Image.network(_gifData!["images"]["fixed_height"]["url"]),
           ],

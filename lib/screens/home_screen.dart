@@ -27,14 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _controller,
         decoration: InputDecoration(
           labelText: "Search for...",
-          labelStyle: TextStyle(color: Colors.grey),
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.search),
+          labelStyle: const TextStyle(color: Colors.grey),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.search),
           suffix: GestureDetector(
             onTap: () {
               _controller.clear();
             },
-            child: Icon(Icons.clear),
+            child: const Icon(Icons.clear),
           ),
         ),
         style: const TextStyle(color: Colors.black, fontSize: 18.0),
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: 200,
       height: 200,
       alignment: Alignment.center,
-      child: const Text("Check your internet connection"),
+      child: const Text("Error fetching GIFs"),
     );
   }
 
@@ -74,7 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
       width: 200,
       height: 200,
       alignment: Alignment.center,
-      child: const Text(""),
+      child: const Text(
+        "No results",
+        style: TextStyle(color: Colors.black),
+      ),
     );
   }
 
@@ -171,6 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     http.Response response;
+
     if (_search.isEmpty) {
       response = await http.Client().get(urlTrending);
     } else {
@@ -178,6 +182,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     try {
+      if (response.statusCode == 200) {
+        result = json.decode(response.body);
+      } else {
+        throw Exception('Failed to load gifs');
+      }
       result = json.decode(response.body);
     } on Exception catch (_, ex) {
       result = ex.toString() as Map;

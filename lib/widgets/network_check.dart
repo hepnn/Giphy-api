@@ -19,12 +19,12 @@ class NetworkAwareWidget extends StatelessWidget {
     if (networkStatus == NetworkStatus.Online) {
       return onlineChild;
     } else {
-      _showToastMessage("Offline");
+      showToastMessage("Offline");
       return offlineChild;
     }
   }
 
-  void _showToastMessage(String message) {
+  void showToastMessage(String message) {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_LONG,
